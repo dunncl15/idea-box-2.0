@@ -121,6 +121,13 @@ input:focus {
   background-color: lightgrey;
 }
 
+/** Folders **/
+
+.idea-folder,
+.idea-folder--all {
+  display: block;
+}
+
 /** Idea Container **/
 
 .idea-container {
