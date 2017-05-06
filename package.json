@@ -1,0 +1,27 @@
+{
+  "name": "idea-box-2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dunncl15/idea-box-2.0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dunncl15/idea-box-2.0/issues"
+  },
+  "homepage": "https://github.com/dunncl15/idea-box-2.0#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "knex": "^0.13.0",
+    "pg": "^6.1.5"
+  }
+}

@@ -1,10 +1,17 @@
 
-$(document).ready(function() {
-  for (var i = 0; i < localStorage.length; i++) {
-    var ideaObject = JSON.parse(localStorage.getItem(localStorage.key(i)));
-    addIdea(ideaObject);
-  }
-})
+$(document).ready(() => {
+  fetch('api/v1/folders')
+  .then(response => response.json())
+  .then(folders => renderFolders(folders));
+});
+
+const renderFolders = (folders) => {
+  return folders.map(folder => appendFolders(folder))
+}
+
+const appendFolders = (folder) => {
+  $('.idea-folders').append(`<button class="idea-folder">${folder.title}</button>`)
+}
 
 //Event Listeners
 
@@ -12,17 +19,6 @@ $('input[type="text"], textarea').on('keyup', function() {
   checkIdeaForm();
 });
 
-// $('textarea').on('keyup', function() {
-//   checkIdeaForm();
-// });
-
-// $('.user-title').on('keyup', function() {
-//   if ($(this).val() !== '') {
-//     $('.save-btn').prop('disabled', false);
-//   } else {
-//     $('.save-btn').prop('disabled', true);
-//   }
-// });
 
 //Save Button Click Event
 
@@ -152,10 +148,8 @@ function clearInputs() {
 }
 
 function checkIdeaForm() {
-  var complete = true;
   $('input[type="text"], textarea').each(function() {
     if ($(this).val() === '') {
-      complete = false;
       disableBtn();
     } else {
       enableBtn();
