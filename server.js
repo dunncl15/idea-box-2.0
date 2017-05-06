@@ -31,6 +31,20 @@ app.get('/api/v1/ideas', (request, response) => {
   .catch(error => console.error('error: ', error))
 })
 
+app.post('/api/v1/ideas', (request, response) => {
+  const idea = request.body;
+  database('ideas').insert(idea, 'id')
+  .then(idea => response.status(201).json({ id: idea[0] }))
+  .catch(error => console.error('error: ', error))
+})
+
+app.delete('/api/v1/ideas/:id', (request, response) => {
+  const id = request.params.id;
+  database('ideas').where('id', id).del()
+  .then(() => response.sendStatus(200))
+  .catch(error => console.error('error: ', error))
+})
+
 app.listen(app.get('port'), () => {
   console.log(`server running on port ${app.get('port')}`);
 });
