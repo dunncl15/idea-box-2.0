@@ -14,6 +14,17 @@ exports.seed = function(knex, Promise) {
               folder_id: folder[0]
             }
           ])
+        }),
+        knex('folders').insert({
+          title: 'Travel'
+        }, 'id')
+        .then(folder => {
+          return knex('ideas').insert([
+            { title: 'Southeast Asia',
+              body: 'We should look into a Thailand, Vietnam trip.',
+              folder_id: folder[0]
+            }
+          ])
         })
       ])
     });
