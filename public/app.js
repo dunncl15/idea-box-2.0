@@ -16,6 +16,11 @@ $('.idea-folder--all').on('click', () => {
   renderIdeas();
 })
 
+$('.save-folder-btn').on('click', () => {
+  let $title = $('.folder-name').val();
+  addNewFolder($title)
+})
+
 $('.ideas').on('click', '.delete-btn', function() {
   let id = ($(this).closest('.idea-container').attr('id'));
   deleteIdea(id)
@@ -31,6 +36,19 @@ const getAllIdeas = () => {
   fetch('/api/v1/ideas')
   .then(response => response.json())
   .then(ideas => renderData(ideas, append));
+}
+
+const addNewFolder = (title) => {
+  fetch('/api/v1/folders', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ title: title })
+  })
+  .then(response => response.json())
+  .then(data => {
+    renderFolders()
+  })
+  .catch(error => console.error('error: ', error))
 }
 
 const saveIdea = (title, body) => {
@@ -71,8 +89,20 @@ const append = (data) => {
      </div>
     </div>`);
   } else {
-    $('.idea-folders').append(`<button id="${id}" class="idea-folder">${title}</button>`)
+    $('.all-folders').append(`<button id="${id}" class="idea-folder">${title}</button>`)
   }
+}
+
+const appendFolder = (folder) => {
+  const { title, id } = folder;
+  console.log(title);
+  const folderBtn = $(`<button id="${id}" class="idea-folder">${title}</button`)
+  $('.all-folders').append(folderBtn)
+}
+
+const renderFolders = () => {
+  $('.all-folders').children().remove();
+  getAllFolders();
 }
 
 const renderIdeas = () => {
