@@ -31,10 +31,24 @@ app.get('/api/v1/ideas', (request, response) => {
   .catch(error => console.error('error: ', error))
 })
 
+app.get('/api/v1/folders/:id/ideas', (request, response) => {
+  const id = request.params.id;
+  database('ideas').where('folder_id', id).select()
+  .then(ideas => response.status(200).json(ideas))
+  .catch(error => console.error('error: ', error))
+})
+
 app.post('/api/v1/ideas', (request, response) => {
   const idea = request.body;
   database('ideas').insert(idea, 'id')
   .then(idea => response.status(201).json({ id: idea[0] }))
+  .catch(error => console.error('error: ', error))
+})
+
+app.post('/api/v1/folders', (request, response) => {
+  const folder = request.body;
+  database('folders').returning(['id', 'title']).insert(folder)
+  .then(folder => response.status(201).json(folder[0]))
   .catch(error => console.error('error: ', error))
 })
 
